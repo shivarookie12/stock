@@ -13,7 +13,21 @@ public class Solution {
 	public static void main(String[] args) throws IOException {
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 		Session session = sf.openSession();
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		Item item = session.get(Item.class, 1);
+		System.out.println(item.getId());
+		System.out.println(item.getName());
+		System.out.println(item.getPrice());
+		System.out.println(item.getQuantity());
+		session.beginTransaction();
+		item.setName("apple");
+		session.update(item);
+		session.getTransaction().commit();
+		System.out.println("updated");
+		session.beginTransaction();
+		session.delete(item);
+		session.getTransaction().commit();
+		session.close();
+	/*	BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		while (true) {
 			System.out.println("Enter choice");
 			int ch = Integer.valueOf(bf.readLine());
@@ -39,7 +53,7 @@ public class Solution {
 			default:
 				System.exit(0);
 			}
-		}
+		}*/
 
 	}
 
